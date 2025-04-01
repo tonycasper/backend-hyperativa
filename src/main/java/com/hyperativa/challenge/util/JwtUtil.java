@@ -14,7 +14,7 @@ import java.util.function.Function;
 @Component
 public class JwtUtil {
 
-    private static final String SECRET_KEY = "BASE64_ENCODED_KEY";
+    private static final String SECRET_KEY = "TXlTZWNyZXRLZXlWYWx1ZUZvckpXVA==";
 
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
@@ -32,6 +32,7 @@ public class JwtUtil {
     private Claims extractAllClaims(String token) {
         return Jwts.parser()
                 .setSigningKey(SECRET_KEY.getBytes())
+                .build()
                 .parseClaimsJws(token)
                 .getBody();
     }

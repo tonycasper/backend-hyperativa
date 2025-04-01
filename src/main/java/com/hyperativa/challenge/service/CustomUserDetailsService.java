@@ -19,15 +19,13 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        // Busca o usuário pelo nome de usuário
         UserEntity user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado: " + username));
 
-        // Converte UserEntity em UserDetails
         return User.builder()
                 .username(user.getUsername())
-                .password(user.getPassword()) // A senha deve estar criptografada no banco
-                .roles(user.getRole()) // Define os papéis do usuário
+                .password(user.getPassword())
+                .roles("USER")
                 .build();
     }
 }

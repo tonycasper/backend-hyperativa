@@ -5,6 +5,7 @@ import com.hyperativa.challenge.service.CardService;
 import com.hyperativa.challenge.util.EncryptionUtil;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -15,6 +16,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/cards")
+@PreAuthorize("hasRole('USER')")
 public class CardController {
 
     private final CardService cardService;
