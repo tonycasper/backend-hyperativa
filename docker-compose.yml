@@ -1,0 +1,36 @@
+version: '3.9'
+
+services:
+
+  mysql:
+    image: mysql:8.0
+    container_name: mysql-container
+    environment:
+      MYSQL_ROOT_PASSWORD: root        # Senha do usuário root
+      MYSQL_DATABASE: hyperativa_db    # Banco de dados que será criado
+      MYSQL_USER: root_gaspar          # Usuário customizado
+      MYSQL_PASSWORD: root_gaspar      # Senha do usuário customizado
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+    command: --default-authentication-plugin=mysql_native_password
+
+  app:
+    build:
+      context: .
+    container_name: java-app
+    depends_on:
+      - mysql
+    ports:
+      - "8080:8080"
+    # As variáveis de ambiente para a aplicação Spring Boot
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/hyperativa_db?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+      SPRING_DATASOURCE_USERNAME: root_gaspar
+      SPRING_DATASOURCE_PASSWORD: root_gaspar
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      SPRING_JPA_SHOW_SQL: true
+
+volumes:
+  mysql-data:
