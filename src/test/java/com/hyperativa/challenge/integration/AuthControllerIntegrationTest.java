@@ -52,8 +52,6 @@ class AuthControllerIntegrationTest {
 
         String token = response.getBody().asString();
 
-        System.out.println("Response: " + response.getBody().asString());
-
         assert token != null;
         assert !token.isEmpty();
         assert jwtUtil.validateToken(token, "user");

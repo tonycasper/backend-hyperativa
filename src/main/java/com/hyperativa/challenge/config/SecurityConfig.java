@@ -19,7 +19,7 @@ public class SecurityConfig {
     private final CustomUserDetailsService userDetailsService;
 
     public SecurityConfig(CustomUserDetailsService userDetailsService) {
-        this.userDetailsService = userDetailsService; // O Spring injeta automaticamente o bean
+        this.userDetailsService = userDetailsService;
     }
 
     @Bean
@@ -29,16 +29,16 @@ public class SecurityConfig {
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder(); // Um encoder para senhas (recomendada para segurança)
+        return new BCryptPasswordEncoder();
     }
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(csrf -> csrf.disable()) // Forma atualizada para desabilitar o CSRF
+                .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth ->
-                        auth.requestMatchers("/auth/login").permitAll() // Permite acesso público ao endpoint
-                                .anyRequest().authenticated() // Exige autenticação para outras requisições
+                        auth.requestMatchers("/auth/login").permitAll()
+                                .anyRequest().authenticated()
                 );
         return http.build();
     }
